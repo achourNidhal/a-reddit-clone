@@ -65,7 +65,7 @@ pipeline {
 	 stage("Trivy Image Scan") {
              steps {
                  script {
-	              sh ('docker run --rm -v $WORKSPACE:/root/.cache/ aquasec/trivy:0.17.2 image nidhaldocker/reddit-clone-pipeline:latest --exit-code 0 --light --severity HIGH,CRITICAL --format table > trivyimage.txt')
+	              sh ('docker run -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:0.17.2 image nidhaldocker/reddit-clone-pipeline:latest --exit-code 0 --light --severity HIGH,CRITICAL --format table > trivyimage.txt')
                  }
              }
          }
