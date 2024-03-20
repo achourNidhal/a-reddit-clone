@@ -24,6 +24,17 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/achourNidhal/a-reddit-clone.git'
             }
         }
+        stage('OWASP Dependency-Check Vulnerabilities') {
+      steps {
+        dependencyCheck additionalArguments: ''' 
+                    -o './'
+                    -s './'
+                    -f 'ALL' 
+                    --prettyPrint''', odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
+        
+        dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+      }
+        }
         stage("Sonarqube Analysis") {
             steps {
                 withSonarQubeEnv('sonarqube-server') {
