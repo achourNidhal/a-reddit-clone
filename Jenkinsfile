@@ -76,7 +76,7 @@ pipeline {
 	 stage("Trivy Image Scan") {
              steps {
                  script {
-	              sh ('trivy image nidhaldocker/reddit-clone-pipeline:latest')
+	              sh ('trivy image nidhaldocker/reddit-clone-pipeline:latest --severity HIGH,CRITICAL --format table > trivyimage.txt')
                  }
              }
          }
@@ -97,7 +97,7 @@ pipeline {
                    "Build Number: ${env.BUILD_NUMBER}<br/>" +
                    "URL: ${env.BUILD_URL}<br/>",
                to: 'achour.nidhal@gmail.com',                              
-               attachmentsPattern: 'trivyfs.txt,trivyimage.txt'
+               attachmentsPattern: 'trivyimage.txt'
         }
      }
     
